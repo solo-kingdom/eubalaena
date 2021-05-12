@@ -1,4 +1,4 @@
-package pub.wii.eubalaena.storage.mysql.service;
+package pub.wii.eubalaena.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
@@ -25,5 +25,13 @@ public class UserService {
 
     public List<UserEntity> list() {
         return userMapper.list();
+    }
+
+    public UserEntity check(UserEntity user) {
+        return userMapper.check(user);
+    }
+
+    public static void encryptPassword(UserEntity user) {
+        user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
     }
 }

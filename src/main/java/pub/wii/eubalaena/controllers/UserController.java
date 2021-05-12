@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pub.wii.common.spring.annotation.Auth;
 import pub.wii.eubalaena.storage.mysql.entity.UserEntity;
-import pub.wii.eubalaena.storage.mysql.service.UserService;
+import pub.wii.eubalaena.service.UserService;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping(value = "insert", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<String> insert(@RequestBody UserEntity user) {
-        user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
+        UserService.encryptPassword(user);
         userService.insert(user);
         return ResponseEntity.ok("ok");
     }

@@ -9,12 +9,15 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("SELECT id,username,email from user")
+    @Select("SELECT id,username,email FROM user")
     List<UserEntity> list();
 
     @Insert("INSERT INTO user(username,password,email) VALUES(#{username},#{password},#{email})")
     void insert(UserEntity user);
 
-    @Select("SELECT id,username,email from user where id=#{id}")
+    @Select("SELECT id,username,email FROM user WHERE id=#{id}")
     UserEntity get(int id);
+
+    @Select("SELECT id FROM user WHERE username=#{username} AND password=#{password}")
+    UserEntity check(UserEntity user);
 }
