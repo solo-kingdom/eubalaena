@@ -14,4 +14,9 @@ public class KeyCenterController {
     public Response<String> put() {
         return Response.ok("ok");
     }
+
+    @RequestMapping(value = "get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response<String> get() {
+        return Response.ok("ok");
+    }
 }
