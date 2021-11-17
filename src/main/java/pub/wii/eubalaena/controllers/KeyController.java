@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pub.wii.common.http.Response;
-import pub.wii.common.spring.annotation.Auth;
 import pub.wii.eubalaena.model.Key;
 import pub.wii.eubalaena.service.KeyService;
 
 @RestController
-@RequestMapping("key")
+@RequestMapping("/api/v1/key")
 public class KeyController {
 
     KeyService keyService;

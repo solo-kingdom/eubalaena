@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("user")
+@RequestMapping("/api/v1/user")
 @Auth
 public class UserController {
 

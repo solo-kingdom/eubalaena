@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "eubalaena.file.location",
+      "type": "java.lang.String",
+      "description": "destination directory for LFS file service."
+    }
+  ]
+}
