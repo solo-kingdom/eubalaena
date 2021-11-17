@@ -63,7 +63,7 @@ public class LFSFileServiceImpl implements FileService {
         Path pt = Paths.get(getBasePath(), path, file);
         log.info("load file. [path={}]", path);
         if (!new File(pt.toUri()).exists()) {
-            throw new BusinessException(Status.NOT_FOUND, "file not exists");
+            throw new BusinessException(Status.NOT_FOUND, String.format("file not exists. [file=%s]", pt));
         }
         return new FileSystemResource(pt);
     }
