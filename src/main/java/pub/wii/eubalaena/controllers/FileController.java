@@ -1,26 +1,42 @@
 package pub.wii.eubalaena.controllers;
 
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pub.wii.common.http.Response;
 import pub.wii.eubalaena.service.FileService;
 
-import javax.annotation.Resource;
+import org.springframework.core.io.Resource;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/file")
 public class FileController {
-    @Resource
+    @javax.annotation.Resource
     FileService fileService;
 
-    @PostMapping(value = "file", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response<String> put(@RequestParam("path") String path, @RequestParam("file") MultipartFile file) {
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response<String> file(@RequestParam(value = "path", defaultValue = "") String path,
+                                 @RequestParam("file") MultipartFile file) {
         fileService.save(path, file);
         return Response.ok("ok");
+    }
+
+    @GetMapping(value = "")
+    @ResponseBody
+    public ResponseEntity<Object> get(@RequestParam(value = "path", defaultValue = "") String path,
+                                      @RequestParam(value = "file") String file) {
+        Resource resource = fileService.load(path, file);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(file);
+    }
+
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response<Object> list(@RequestParam(value = "path", defaultValue = "") String path) {
+        return Response.ok(fileService.list(path));
     }
 }
