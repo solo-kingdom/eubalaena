@@ -10,7 +10,7 @@ spring:
     host: 127.0.0.1
 
 server:
-  port: 8088
+  port: 9081
 
 auth:
   enable: true

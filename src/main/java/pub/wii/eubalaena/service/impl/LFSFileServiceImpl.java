@@ -34,9 +34,9 @@ public class LFSFileServiceImpl implements FileService {
     @Override
     public void save(String path, MultipartFile file) {
         Path pt = Paths.get(getBasePath(), path);
-        log.info("save file into local storage. [path={}, fileName={}]", pt, file.getName());
+        log.info("save file into local storage. [path={}, fileName={}]", pt, file.getOriginalFilename());
         FileUtils.ensurePath(pt.toString());
-        Path f = Paths.get(pt.toString(), file.getName());
+        Path f = Paths.get(pt.toString(), file.getOriginalFilename());
         try {
             file.transferTo(f);
         } catch (Exception e) {
@@ -48,13 +48,15 @@ public class LFSFileServiceImpl implements FileService {
     public List<FileListItem> list(String path) {
         File f = new File(Paths.get(getBasePath(), path).toUri());
         File[] fs = f.listFiles();
-        if (fs == null || fs.length == 0) {
-            return new ArrayList<>();
-        } else {
-            return Arrays.stream(fs)
+        List<FileListItem> res = new ArrayList<>();
+
+        if (fs != null && fs.length > 0) {
+            res = Arrays.stream(fs)
                     .map(FileListItem::new)
                     .collect(Collectors.toList());
         }
+        log.info("list file. [path={}, res={}]", f.getAbsolutePath(), res);
+        return res;
     }
 
     @Override

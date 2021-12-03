@@ -21,22 +21,24 @@ public class PackageController {
     FileService fileService;
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response<String> file(@RequestParam(value = "package") String pkg,
-                                 @RequestParam(value = "product") String product,
-                                 @RequestParam(value = "version") String version,
-                                 @RequestParam("file") MultipartFile file) {
-        String path = Paths.get(pkg, product, version).toString();
+    public Response<String> file(@RequestParam String space,
+                                 @RequestParam String product,
+                                 @RequestParam String module,
+                                 @RequestParam String version,
+                                 @RequestParam MultipartFile file) {
+        String path = Paths.get(space, product, module, version).toString();
         fileService.save(path, file);
         return Response.ok("ok");
     }
 
     @GetMapping(value = "")
     @ResponseBody
-    public ResponseEntity<Object> get(@RequestParam(value = "package") String pkg,
-                                      @RequestParam(value = "product") String product,
-                                      @RequestParam(value = "version") String version,
-                                      @RequestParam(value = "file") String file) {
-        String path = Paths.get(pkg, product, version).toString();
+    public ResponseEntity<Object> get(@RequestParam String space,
+                                      @RequestParam String product,
+                                      @RequestParam String module,
+                                      @RequestParam String version,
+                                      @RequestParam String file) {
+        String path = Paths.get(space, product, module, version).toString();
         Resource resource = fileService.load(path, file);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
@@ -57,10 +59,11 @@ public class PackageController {
     }
 
     @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response<Object> list(@RequestParam(value = "package") String pkg,
-                                 @RequestParam(value = "product") String product,
-                                 @RequestParam(value = "version") String version) {
-        String path = Paths.get(pkg, product, version).toString();
+    public Response<Object> list(@RequestParam String space,
+                                 @RequestParam String product,
+                                 @RequestParam String module,
+                                 @RequestParam String version) {
+        String path = Paths.get(space, product, module, version).toString();
         return Response.ok(fileService.list(path));
     }
 }
