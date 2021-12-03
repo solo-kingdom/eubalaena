@@ -60,18 +60,6 @@ CREATE TABLE `user` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-
-INSERT INTO `user` (`id`, `username`, `password`, `email`)
-VALUES
-	(7,'b','4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2','zhenkai.sun@qq.com'),
-	(8,'wii','4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2','zhenkai.sun@qq.com');
-
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
