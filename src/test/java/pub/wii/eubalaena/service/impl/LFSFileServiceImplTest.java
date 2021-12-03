@@ -17,7 +17,8 @@ class LFSFileServiceImplTest {
 
     @Test
     void save() {
-        MultipartFile file = new MockMultipartFile("test.file", "bar".getBytes());
+        MultipartFile file = new MockMultipartFile("test.file",
+                "test.file", "application/octet-stream", "bar".getBytes());
         fileService.save(UUID.randomUUID().toString(), file);
     }
 }
